@@ -1,0 +1,23 @@
+- name: juri's user
+  user: 
+    name: juri
+
+- name: set juri's key
+  ansible.posix.authorized_key:
+    user: juri
+    state: present
+    key: https://github.com/hudolejev.keys
+  
+- name: roman's user
+  user: 
+    name: roman
+
+- name: set roman's key
+  ansible.posix.authorized_key:
+    user: roman
+    state: present
+    key: https://github.com/romankuchin.keys
+  
+
+
+

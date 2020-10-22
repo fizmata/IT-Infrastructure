@@ -1,0 +1,10 @@
+- name: install nginx
+  apt:
+    name: nginx
+    state: present
+
+- name: put index.html up
+  copy:
+    src: ../files/index.html
+    dest: /var/www/html
+    mode: 644
