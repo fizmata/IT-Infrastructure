@@ -1,5 +1,0 @@
-vm-1 ansible_host=193.40.156.86 ansible_port=3722 ansible_user=ubuntu ansible_python_interpreter=python3
-
-[web_servers]
-vm-1
-
