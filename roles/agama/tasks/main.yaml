@@ -1,0 +1,22 @@
+- name: crate user
+  user: 
+    name: agama
+
+- name: create directory
+  file:
+    path: /opt/agama
+    state: directory
+    owner: agama
+    group: agama
+    mode: 0775
+  
+- name: install dependencies
+  apt:
+    name: python3-flask-sqlalchemy
+    state: present 
+
+- name: install agama
+  get_url:
+    url: https://raw.githubusercontent.com/hudolejev/agama/master/agama.py
+    dest: /opt/agama/agama.py
+    mode: 0755
