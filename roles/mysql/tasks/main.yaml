@@ -1,9 +1,9 @@
-- name: install mysql
+- name: install MySQL
   apt:
     name: mysql-server
     state: present
 
-- name: mysql config override
+- name: MySQL config override
   copy:
     src: ../files/override.cnf
     dest: /etc/mysql/mysql.conf.d/
@@ -18,4 +18,13 @@
 - name: MySQL database
   mysql_db:
     name: "{{ mysql_database }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+
+- name: MySQL user
+  mysql_user:
+    name: "{{ mysql_user }}"
+    password: "{{ mysql_password }}"
+    state: present
+    priv: "{{ mysql_database }}.*:ALL"
+    host: "%"
     login_unix_socket: /var/run/mysqld/mysqld.sock

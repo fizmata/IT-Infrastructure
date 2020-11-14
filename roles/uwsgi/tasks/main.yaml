@@ -8,9 +8,14 @@
     name: uwsgi-plugin-python3
     state: present
 
+- name: install PyMySQL
+  apt:
+    name: python3-pymysql
+    state: present
+
 - name: add uwsgi config
-  copy:
-    src: ../files/agama.ini
+  template:
+    src: ../templates/agama.j2
     dest: /etc/uwsgi/apps-enabled/agama.ini
     mode: 0644
   notify: restart uwsgi
@@ -19,8 +24,5 @@
   become: yes
   become_user: agama
   service:
-    name: uwsgi 
+    name: uwsgi
     state: started
-  
-  
-    
