@@ -9,3 +9,13 @@
     dest: /etc/mysql/mysql.conf.d/
     mode: 644
   notify: restart mysql
+
+- name: install PyMySQL
+  apt:
+    name: python3-pymysql
+    state: present
+
+- name: MySQL database
+  mysql_db:
+    name: "{{ mysql_database }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
