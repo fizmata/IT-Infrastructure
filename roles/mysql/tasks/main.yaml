@@ -1,0 +1,11 @@
+- name: install mysql
+  apt:
+    name: mysql-server
+    state: present
+
+- name: mysql config override
+  copy:
+    src: ../files/override.cnf
+    dest: /etc/mysql/mysql.conf.d/
+    mode: 644
+  notify: restart mysql
