@@ -5,7 +5,7 @@
 
 - name: MySQL config override
   copy:
-    src: ../files/override.cnf
+    src: override.cnf
     dest: /etc/mysql/mysql.conf.d/
     mode: 644
   notify: restart mysql

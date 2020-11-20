@@ -15,7 +15,7 @@
 
 - name: add uwsgi config
   template:
-    src: ../templates/agama.j2
+    src: agama.j2
     dest: /etc/uwsgi/apps-enabled/agama.ini
     mode: 0644
   notify: restart uwsgi
