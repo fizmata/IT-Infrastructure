@@ -1,0 +1,16 @@
+- name: install bind
+  apt:
+    name: bind9
+    update_cache: yes
+
+- name: conf bind
+  template:
+    src: named.conf.options.j2
+    dest: /etc/bind/named.conf.options
+  notify: restart bind
+
+- name: conf master zone
+  template:
+    src: db.nuttn.j2
+    dest: /etc/bind/db.nuttn
+  notify: reload DNS records

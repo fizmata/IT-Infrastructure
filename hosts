@@ -10,3 +10,6 @@ vm-1
 
 [db_servers]
 vm-2
+
+[dns_servers]
+vm-2

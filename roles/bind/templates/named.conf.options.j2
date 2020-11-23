@@ -1,0 +1,25 @@
+options {
+	directory "/var/cache/bind";
+
+  allow-query {
+  {% for n in allowed_networks %}
+          {{ n }};
+  {% endfor %}
+  };
+
+	forwarders {
+  {% for f in dns_forwarders %}
+          {{ f }};
+  {% endfor %}
+	};
+
+	dnssec-validation no;
+
+	auth-nxdomain no;    # conform to RFC1035
+};
+
+zone {{ domain }} {
+	type master;
+	file "/etc/bind/db.nuttn";
+
+};
