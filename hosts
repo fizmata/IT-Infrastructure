@@ -1,6 +1,6 @@
-vm-1 ansible_host=193.40.156.86 ansible_port=10622 ansible_ssh_user=ubuntu ansible_python_interpreter=python3
+vm-1 ansible_host=193.40.156.86 ansible_port=11922 ansible_ssh_user=ubuntu ansible_python_interpreter=python3
 
-vm-2 ansible_host=193.40.156.86 ansible_port=15722 ansible_ssh_user=ubuntu ansible_python_interpreter=python3
+vm-2 ansible_host=193.40.156.86 ansible_port=5522 ansible_ssh_user=ubuntu ansible_python_interpreter=python3
 
 [web_servers]
 vm-1
@@ -13,3 +13,6 @@ vm-2
 
 [dns_servers]
 vm-2
+
+[prometheus_server]
+vm-1
