@@ -1,0 +1,11 @@
+---
+  - name: Collect info about all VMs
+    hosts: all
+    tasks:
+      - setup:
+
+  - name: Install bind exporter
+    hosts: dns_servers
+    become: yes
+    roles:
+      - bind_exporter

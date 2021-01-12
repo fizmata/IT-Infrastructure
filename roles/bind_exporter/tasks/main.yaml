@@ -1,0 +1,6 @@
+---
+  - name: Package
+    apt:
+      name: prometheus-bind-exporter
+      state: present
+      update_cache: yes

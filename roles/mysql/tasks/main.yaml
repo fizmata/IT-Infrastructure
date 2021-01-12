@@ -2,6 +2,7 @@
   apt:
     name: mysql-server
     state: present
+    update_cache: yes
 
 - name: MySQL config override
   copy:
