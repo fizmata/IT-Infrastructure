@@ -11,7 +11,7 @@
       - node_exporter
 
   - name: Prometheus
-    hosts: prometheus_server
+    hosts: prometheus
     become: yes
     roles:
       - prometheus

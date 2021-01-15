@@ -14,6 +14,6 @@
     lineinfile:
       path: /etc/default/prometheus
       regexp: '^ARGS='
-      line: ARGS='--web.external-url=http://{{ groups['prometheus_server'][0]}}.{{domain}}/prometheus'
+      line: ARGS='--web.external-url=http://{{ groups['prometheus'][0]}}.{{domain}}/prometheus'
     notify:
       - Restart prometheus

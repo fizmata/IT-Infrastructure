@@ -9,3 +9,33 @@
     become: yes
     roles:
       - bind_exporter
+    tags:
+      - bind
+
+  - name: Install mysql exporter
+    hosts: db_servers
+    become: yes
+    roles:
+      - mysql_exporter
+
+  - name: Install nginx exporter
+    hosts: app_servers
+    become: yes
+    roles:
+      - nginx_exporter
+    tags:
+      - nginx
+
+  - name: Install grafana
+    hosts: grafana
+    become: yes
+    roles:
+      - grafana
+    tags:
+      - grafana
+
+  - name: Setup reverse proxy
+    hosts: all
+    become: yes
+    roles:
+      - reverse_proxy

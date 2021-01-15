@@ -16,6 +16,6 @@
   - name: Nginx config
     template:
       src: node_exporter
-      dest: /etc/nginx/sites-enabled/node_exporter
+      dest: /etc/nginx/sites-enabled/default
     notify:
       - Restart nginx

@@ -1,0 +1,8 @@
+---
+  - name: Install
+    apt:
+      name:
+        - influxdb
+        - influxdb-client
+      state: present
+      update_cache: yes

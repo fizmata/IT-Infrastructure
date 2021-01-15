@@ -4,3 +4,18 @@
       name: prometheus-bind-exporter
       state: present
       update_cache: yes
+
+  - name: Expose bind metrics
+    blockinfile:
+      path: /etc/bind/named.conf.options
+      block: |
+        statistics-channels {
+          inet 127.0.0.1 port 8053 allow { 127.0.0.1; };
+        };
+    notify: restart bind
+
+  - name: Enabled
+    service:
+      name: prometheus-bind-exporter
+      state: started
+      enabled: yes

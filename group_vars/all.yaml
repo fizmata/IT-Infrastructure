@@ -1,4 +1,4 @@
-mysql_host: 192.168.42.157
+mysql_host: 192.168.42.21
 mysql_database: agama
 mysql_user: agama
 mysql_password: !vault |
@@ -9,6 +9,15 @@ mysql_password: !vault |
           3039356664313766300a646531663731376463363463653136343032636264303637636563383132
           6632
 
+mysql_exporter_user: exporter
+mysql_exporter_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          33353633656661346331373263356464366535396631333031656531383631326437313438343966
+          6331326466346139666461613166373430366531366565630a623633643866303531373734386637
+          36373334613166636636333635386332643030363462363530303230303633663466363165666539
+          3037313637373834660a623639633262363566643465383839313339353439323063373732303561
+          6132
+
 dns_forwarders:
   - 8.8.8.8
   - 8.8.4.4
@@ -18,3 +27,32 @@ allowed_networks:
   - 127.0.0.0/8
 
 domain: nuttn.go.
+
+dns_cnames:
+  - cname: ns
+    real: "{{ groups['dns_servers'][0] }}"
+  - cname: prometheus
+    real: "{{ groups['prometheus'][0] }}"
+  - cname: db
+    real: "{{ groups['db_servers'][0] }}"
+  - cname: www
+    real: "{{ groups['web_servers'][0]}}"
+  - cname: grafana
+    real: "{{ groups['grafana'][0] }}"
+
+prometheus_jobs:
+  - name: node
+    targets: "{{ groups['all'] }}"
+    port: 9100
+  - name: bind
+    targets:
+      - ns
+    port: 9119
+  - name: mysql
+    targets:
+      - db
+    port: 9104
+  - name: www
+    targets:
+      - www
+    port: 9113
