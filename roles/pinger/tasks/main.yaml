@@ -1,0 +1,37 @@
+---
+  - name: Install fping
+    apt:
+      name: fping
+      state: present
+      update_cache: yes
+
+  - name: get pinger script
+    get_url:
+      url: https://raw.githubusercontent.com/romankuchin/ica0002-2020/master/08-logging/08-demo/pinger.sh
+      dest:  /usr/local/bin/pinger
+      mode: '0755'
+
+
+  - name: make config directory
+    file:
+      path: /etc/pinger/
+      state: directory
+
+  - name: get pinger config file
+    template:
+      src: pinger.conf.j2
+      dest: /etc/pinger/pinger.conf
+    notify:
+      - restart pinger
+
+  - name: create pinger user
+    user:
+      name: pinger
+
+  - name: build pinger service
+    template:
+      src: pinger.service.j2
+      dest: /etc/systemd/system/pinger.service
+    notify:
+      - systemctl daemon-reload
+      - restart pinger

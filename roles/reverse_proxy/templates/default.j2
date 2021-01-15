@@ -40,7 +40,7 @@ server{
 
   {% if inventory_hostname in groups['app_servers'] %}
   location /nginx-metrics {
-      proxy_pass http://localhost:9013/metrics;
+      proxy_pass http://localhost:9113/metrics;
   }
   {% endif %}
 

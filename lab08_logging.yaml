@@ -1,0 +1,27 @@
+---
+  - name: Collect info about all VMs
+    hosts: all
+    tasks:
+      - setup:
+
+  - name: Install influxdb
+    hosts: influxdb
+    become: yes
+    roles:
+      - influxdb
+
+  - name: Install pinger
+    hosts: influxdb
+    become: yes
+    roles:
+      - pinger
+    tags:
+      - pinger
+
+  - name: Configure rsyslog
+    hosts: all
+    become: yes
+    roles:
+      - rsyslog
+    tags:
+      - syslog

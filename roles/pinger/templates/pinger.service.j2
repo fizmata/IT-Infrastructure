@@ -1,0 +1,11 @@
+[Unit]
+Description=Pringer: script for measuring latency
+
+[Service]
+Restart=always
+User=pinger
+ExecStart=/usr/local/bin/pinger
+
+
+[Install]
+WantedBy=multi-user.target

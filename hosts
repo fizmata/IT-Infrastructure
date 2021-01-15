@@ -19,3 +19,6 @@ vm-1
 
 [grafana]
 vm-1
+
+[influxdb]
+vm-2
