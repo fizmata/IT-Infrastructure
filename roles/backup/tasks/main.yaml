@@ -1,0 +1,8 @@
+---
+  - name: create backup user
+    user:
+      name: backup
+      create_home: yes
+      home: /home/backup
+      generate_ssh_key: yes
+      force: yes

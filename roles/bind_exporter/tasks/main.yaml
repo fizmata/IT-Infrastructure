@@ -8,6 +8,7 @@
   - name: Expose bind metrics
     blockinfile:
       path: /etc/bind/named.conf.options
+      state: present
       block: |
         statistics-channels {
           inet 127.0.0.1 port 8053 allow { 127.0.0.1; };

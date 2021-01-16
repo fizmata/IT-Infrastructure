@@ -6,8 +6,8 @@
       update_cache: yes
 
   - name: get pinger script
-    get_url:
-      url: https://raw.githubusercontent.com/romankuchin/ica0002-2020/master/08-logging/08-demo/pinger.sh
+    template:
+      src: pinger.sh
       dest:  /usr/local/bin/pinger
       mode: '0755'
 

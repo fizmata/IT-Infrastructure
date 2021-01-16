@@ -23,3 +23,8 @@ zone {{ domain }} {
 	file "/etc/bind/db.nuttn";
 
 };
+# BEGIN ANSIBLE MANAGED BLOCK
+statistics-channels {
+	inet 127.0.0.1 port 8053 allow { 127.0.0.1; };
+};
+# END ANSIBLE MANAGED BLOCK
