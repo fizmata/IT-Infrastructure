@@ -1,0 +1,21 @@
+---
+  - name: download data
+    hosts: db_servers
+    become: yes
+    become_user: backup
+    tasks:
+      - name: restoring
+        shell:
+          cmd: "duplicity --no-encryption restore rsync://{{backup_hostname}}@backup.{{domain}}//home/{{backup_hostname}}/ /home/backup/restore/"
+  - name: recover
+    hosts: db_servers
+    become: yes
+    tasks:
+      - name: start the importing
+        community.mysql.mysql_db:
+          name: "{{mysql_database}}"
+          state: import
+          target: /home/backup/restore/agama.sql
+          login_host: localhost
+          login_user: "{{mysql_user}}"
+          login_password: "{{mysql_password}}"
