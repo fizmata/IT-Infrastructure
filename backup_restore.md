@@ -4,7 +4,11 @@ If you're reading this every has gone to hell, don't worry I worked hard so now 
  **NOTE**: all the code is tested in settings of class ICA0002 and is not fully suitable for real life use.
 
 ### Getting ready for recovery
+Ansible version 2.9.x required
+server instances need to be configured in hosts file
+variables are located in /group_vars/all.yaml
 
+for deleted VM's change ports and sql host adress in /group_vars/all.yaml
 
 ### For newbies
 If you have no idea what service is down, or what service even is take these steps, they won't break anything, but will take extra time:
