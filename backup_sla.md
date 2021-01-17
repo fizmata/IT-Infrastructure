@@ -1,15 +1,8 @@
-Web servers - easier to redeploy
-App servers - redeploy
-Database servers -redeploy, reinsert data
-DNS servers - redeploy is only way to go here, new IP's and etc.
-Monitoring servers:
- - Prometheus: let it burn
- - Grafana: needs backup for sure
- - Telegraf: redeploy
- - InfluxDB: redeploy
-Ansible repository: copy goes on backup server, maybe copy on gitlab as well
-
 ## Backup coverage
+### Infrastructure diagram
+
+![](my_infra.png)
+
 ### What is backed up:
 - mysql Database entries
 - Grafana
@@ -42,4 +35,4 @@ at every third backup date, restore latest backup, check readability of previous
 When everything crashes and burns
 
 ## Backup RTO
-this remains to be tested 
+this remains to be tested

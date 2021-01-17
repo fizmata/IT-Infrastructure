@@ -2,7 +2,33 @@
   - name: create backup user
     user:
       name: backup
-      create_home: yes
-      home: /home/backup
+      shell: /bin/bash
+      home: /home/backup/
       generate_ssh_key: yes
-      force: yes
+
+  - name: install duplicity
+    apt:
+      name: duplicity
+      state: present
+      update_cache: yes
+
+  - name: make directory backup and restor
+    file:
+      path: '{{ item.path }}'
+      owner: backup
+      state: directory
+    loop:
+        - { path: /home/backup/backup }
+        - { path: /home/backup/restore }
+
+  - name: create cronjob
+    template:
+      src: cronjob.j2
+      dest: /etc/cron.d/backup
+
+  - name: ssh config
+    copy:
+      dest: /home/backup/.ssh/config
+      content: |
+        Host *
+          StrictHostKeyChecking no

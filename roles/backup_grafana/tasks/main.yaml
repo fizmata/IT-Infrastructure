@@ -1,0 +1,7 @@
+---
+  - name: add backup user to grafana group
+    user:
+      name: backup
+      append: yes
+      groups:
+        - grafana
