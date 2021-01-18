@@ -1,0 +1,28 @@
+---
+  - name: download data
+    hosts: grafana
+    become: yes
+    become_user: backup
+    tasks:
+      - name: restoring
+        shell:
+          cmd: "duplicity --no-encryption restore rsync://{{backup_hostname}}@backup.{{domain}}//home/{{backup_hostname}}/ /home/backup/restore/"
+  - name: recover
+    hosts: grafana
+    become: yes
+    tasks:
+      - name: stop grafana
+        docker_container:
+          name: grafana
+          state: stopped
+      - name: copy grafana db
+        copy:
+          remote_src: True
+          src: /home/backup/restore/grafana.db
+          dest: /opt/docker/grafana/grafana.db
+          owner: 472
+          group: 472
+      - name: start grafana
+        docker_container:
+          name: grafana
+          state: started

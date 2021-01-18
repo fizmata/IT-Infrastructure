@@ -4,6 +4,9 @@
 {% if inventory_hostname in groups['grafana'] %}
 5 3 * * */{{ increment_period }} backup cp /var/lib/grafana/grafana.db ~/backup/
 {% endif %}
+{% if inventory_hostname in groups['grafana_docker'] %}
+5 3 * * */{{ increment_period }} backup cp /opt/docker/grafana/grafana.db ~/backup/
+{% endif %}
 21 3 * * */{{ increment_period }} backup duplicity --no-encryption  incremental /home/backup/backup/ rsync://{{ backup_hostname }}@backup.{{ domain }}//home/{{ backup_hostname }}/
 11 3  * * */{{ full_backup_period }} backup duplicity --no-encryption  full /home/backup/backup/ rsync://{{ backup_hostname }}@backup.{{ domain }}//home/{{ backup_hostname }}/
 0 4  * * */{{ full_backup_period }} backup duplicity remove-older-than {{ full_backup_period * 3 + 1 }}D rsync://{{ backup_hostname }}@backup.{{ domain }}//home/{{ backup_hostname }}/ --force

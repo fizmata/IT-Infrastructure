@@ -26,3 +26,9 @@ vm-2
 
 [mysql_master]
 vm-2
+
+[mysql_slave]
+vm-1
+
+[grafana_docker]
+vm-1

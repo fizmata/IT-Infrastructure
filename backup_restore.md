@@ -27,3 +27,17 @@ To redeploy individual services use tags
 - prometheus `ansible-playbook redeploy.yaml -t prometheus`
 - influxdb `ansible-playbook redeploy.yaml -t influxdb`
 - grafana `ansible-playbook redeploy.yaml -t grafana`
+
+
+### Restoring mysql db
+This can be accomplished by running `ansible-playbook restoreDB.yaml`
+**NOTE**:script expects `/home/backup/restore/` to be empty
+
+
+### Restoring grafana
+This can be accomplished by running `ansible-playbook restore_grafana.yaml`
+**NOTE**:script expects `/home/backup/restore/` to be empty
+
+### Restoring grafana in docker
+This can be accomplished by running `ansible-playbook restore_grafana_docker.yaml`
+**NOTE**:script expects `/home/backup/restore/` to be empty

@@ -1,0 +1,29 @@
+---
+  - name: Collect info about all VMs
+    hosts: all
+    tasks:
+      - setup:
+
+  - name: Install docker
+    hosts: all
+    gather_facts: no
+    become: yes
+    roles:
+      - docker
+
+  - name: grafana on docker
+    hosts: grafana_docker
+    gather_facts: no
+    become: yes
+    roles:
+      - grafana_docker
+
+  - name: agama on dockerfile
+    hosts: app_servers
+    gather_facts: no
+    become: yes
+    roles:
+      - agama_docker
+      - reverse_proxy
+    tags:
+      - agama

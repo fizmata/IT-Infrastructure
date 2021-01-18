@@ -50,6 +50,9 @@ allowed_networks:
 
 domain: nuttn.go.
 
+grafana_port: 3000
+agama_port: 8000
+
 dns_cnames:
   - cname: ns
     real: "{{ groups['dns_servers'][0] }}"

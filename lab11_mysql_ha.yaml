@@ -29,7 +29,7 @@
       - mysql
 
   - name: setup mysql replica
-    hosts: mysql_replica
+    hosts: mysql_slave
     become: yes
     gather_facts: no
     roles:

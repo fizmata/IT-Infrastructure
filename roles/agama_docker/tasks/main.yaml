@@ -1,0 +1,26 @@
+---
+  - name: make directory
+    file:
+      path: /opt/agama
+      state: directory
+      
+  - name: get dockerfile
+    get_url:
+      url: https://raw.githubusercontent.com/hudolejev/agama/master/Dockerfile
+      dest: /opt/agama/Dockerfile
+
+  - name: build container
+    docker_image:
+      name: agama
+      build:
+        path: /opt/agama/
+      source: build
+
+  - name: start container
+    docker_container:
+      name: agama
+      image: agama
+      env:
+        AGAMA_DATABASE_URI: mysql://{{mysql_host}}
+      published_ports:
+        - "{{ agama_port }}:8000"

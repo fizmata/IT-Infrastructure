@@ -1,0 +1,37 @@
+---
+  - name: grafana directory
+    file:
+      path: /opt/docker/grafana
+      state: directory
+      owner: 472
+      group: 472
+
+  - name: grafana container
+    docker_container:
+      name: grafana
+      image: grafana/grafana
+      env:
+        GF_SERVER_ROOT_URL: "http://localhost:{{grafana_port}}/grafana"
+        GF_SERVER_SERVE_FROM_SUB_PATH: "true"
+      published_ports:
+        - "{{ grafana_port }}:3000"
+      volumes:
+        - /opt/docker/grafana:/var/lib/grafana
+
+
+  - name: grafana.db permissions
+    file:
+      path: /opt/docker/grafana/grafana.db
+      owner: 472
+      group: 472
+
+  - name: grafana group
+    group:
+      name: grafana_docker
+      gid: 472
+
+  - name: add backup to group
+    user:
+      name: backup
+      groups: grafana_docker
+      append: yes
