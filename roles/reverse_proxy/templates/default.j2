@@ -19,7 +19,7 @@ server{
   {% endif %}
 
 
-  {% if inventory_hostname in groups['grafana'] %}
+  {% if inventory_hostname in groups['grafana'] or inventory_hostname in groups['grafana_docker'] %}
   location /grafana {
       proxy_pass http://localhost:3000;
   }
