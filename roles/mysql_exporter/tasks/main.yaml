@@ -9,6 +9,7 @@
     template:
       src: my.cnf.j2
       dest: /var/lib/prometheus/.my.cnf
+      mode: "0644"
     notify:
       - restart mysql_exporter
 
@@ -24,5 +25,4 @@
   - name: Enabled
     service:
       name: prometheus-mysqld-exporter
-      state: started
-      enabled: yes
+      state: restarted

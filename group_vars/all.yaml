@@ -1,4 +1,4 @@
-mysql_host: 192.168.42.43
+mysql_host: 192.168.42.45
 mysql_database: agama
 mysql_user: agama
 mysql_password: !vault |
@@ -31,6 +31,14 @@ mysql_backup_password: !vault |
           3132653430626435640a393530366138653238393262323436643532653030626339366436336536
           3238
 
+mysql_replication_user: replication
+mysql_replication_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          33323933383835363034663963636366373739363466653037636132636230366162383939356439
+          3963656536653037663664336664366166353966373064340a373837633862643737353631623539
+          61393266356131646336303835613062303630323830383763313565656137666362323433613338
+          6563323464326239380a626632633634636263356332323931363339616639653630303231363964
+          3238
 
 dns_forwarders:
   - 8.8.8.8
@@ -47,8 +55,10 @@ dns_cnames:
     real: "{{ groups['dns_servers'][0] }}"
   - cname: prometheus
     real: "{{ groups['prometheus'][0] }}"
-  - cname: db
+  - cname: db-1
     real: "{{ groups['db_servers'][0] }}"
+  - cname: db-2
+    real: "{{ groups['db_servers'][1] }}"
   - cname: www
     real: "{{ groups['web_servers'][0]}}"
   - cname: grafana
@@ -66,7 +76,8 @@ prometheus_jobs:
     port: 9119
   - name: mysql
     targets:
-      - db
+      - db-1
+      - db-2
     port: 9104
   - name: www
     targets:

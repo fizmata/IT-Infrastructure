@@ -2,7 +2,7 @@
   apt:
     name: bind9
     update_cache: yes
-
+    
 - name: conf bind
   template:
     src: named.conf.options.j2

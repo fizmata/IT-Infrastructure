@@ -1,0 +1,111 @@
+---
+  - name: Collect info about all VMs
+    hosts: all
+    tasks:
+      - setup:
+
+  - name: Install bind9
+    hosts: dns_servers
+    become: yes
+    gather_facts: no
+    roles:
+      - bind
+
+  - name: nginx, resolved
+    hosts: all
+    become: yes
+    gather_facts: no
+    roles:
+      - reverse_proxy
+      - configure_resolved
+
+  - name: Install mysql
+    hosts: db_servers
+    become: yes
+    gather_facts: no
+    roles:
+      - mysql
+    tags:
+      - mysql
+
+  - name: setup mysql replica
+    hosts: mysql_replica
+    become: yes
+    gather_facts: no
+    roles:
+      - mysql_replica
+    tags:
+      - replication
+
+  - name: agama
+    hosts: app_servers
+    become: yes
+    gather_facts: no
+    roles:
+      - agama
+      - uwsgi
+
+  - name: backup
+    hosts: all
+    become: yes
+    gather_facts: no
+    roles:
+      - backup
+
+  - name: backup mysql
+    hosts: mysql_master
+    become: yes
+    gather_facts: no
+    roles:
+      - backup_mysql
+
+  - name: prometheus
+    hosts: prometheus
+    become: yes
+    gather_facts: no
+    roles:
+      - prometheus
+
+  - name: bind exporter
+    hosts: dns_servers
+    become: yes
+    gather_facts: no
+    roles:
+      - bind_exporter
+    tags:
+      - bind_exporter
+
+  - name: node exporters
+    hosts: all
+    become: yes
+    gather_facts: no
+    roles:
+      - node_exporter
+
+  - name: mysql exporter
+    hosts: db_servers
+    become: yes
+    gather_facts: no
+    roles:
+      - mysql_exporter
+
+  - name: agama nginx exporter
+    hosts: app_servers
+    become: yes
+    gather_facts: no
+    roles:
+      - nginx_exporter
+
+  - name: grafana
+    hosts: grafana
+    become: yes
+    gather_facts: no
+    roles:
+      - grafana
+
+  - name: backup grafana
+    hosts: grafana
+    become: yes
+    gather_facts: no
+    roles:
+      - backup_grafana

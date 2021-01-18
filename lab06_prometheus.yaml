@@ -9,6 +9,7 @@
     become: yes
     roles:
       - node_exporter
+      - reverse_proxy
 
   - name: Prometheus
     hosts: prometheus

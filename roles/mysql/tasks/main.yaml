@@ -5,10 +5,9 @@
     update_cache: yes
 
 - name: MySQL config override
-  copy:
-    src: override.cnf
-    dest: /etc/mysql/mysql.conf.d/
-    mode: 644
+  template:
+    src: override.cnf.j2
+    dest: /etc/mysql/mysql.conf.d/override.cnf
   notify: restart mysql
 
 - name: install PyMySQL
@@ -27,6 +26,16 @@
     password: "{{ mysql_password }}"
     state: present
     priv: "{{ mysql_database }}.*:ALL"
+    host: "%"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  no_log: True
+
+- name: replication user
+  mysql_user:
+    name: "{{ mysql_replication_user }}"
+    password: "{{ mysql_replication_password }}"
+    state: present
+    priv: "*.*:REPLICATION SLAVE"
     host: "%"
     login_unix_socket: /var/run/mysqld/mysqld.sock
   no_log: True

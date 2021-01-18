@@ -5,10 +5,3 @@
         - prometheus-node-exporter
         - nginx
       update_cache: yes
-
-  - name: Nginx config
-    template:
-      src: node_exporter
-      dest: /etc/nginx/sites-enabled/default
-    notify:
-      - Restart nginx

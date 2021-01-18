@@ -1,0 +1,23 @@
+---
+  - name: stop slave
+    community.mysql.mysql_replication:
+      mode: stopslave
+      login_unix_socket: /var/run/mysqld/mysqld.sock
+
+  - name: change master
+    community.mysql.mysql_replication:
+      mode: changemaster
+      master_host: "{{mysql_host}}"
+      master_user: "{{ mysql_replication_user }}"
+      master_password: "{{ mysql_replication_password }}"
+      login_unix_socket: /var/run/mysqld/mysqld.sock
+
+  - name: reset slave
+    community.mysql.mysql_replication:
+      mode: resetslave
+      login_unix_socket: /var/run/mysqld/mysqld.sock
+
+  - name: start slave
+    community.mysql.mysql_replication:
+      mode: startslave
+      login_unix_socket: /var/run/mysqld/mysqld.sock

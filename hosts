@@ -1,6 +1,6 @@
-vm-1 ansible_host=193.40.156.86 ansible_port=6422 ansible_ssh_user=ubuntu ansible_python_interpreter=python3
+vm-1 ansible_host=193.40.156.86 ansible_port=8522 ansible_ssh_user=ubuntu ansible_python_interpreter=python3
 
-vm-2 ansible_host=193.40.156.86 ansible_port=4322 ansible_ssh_user=ubuntu ansible_python_interpreter=python3
+vm-2 ansible_host=193.40.156.86 ansible_port=4522 ansible_ssh_user=ubuntu ansible_python_interpreter=python3
 
 [web_servers]
 vm-1
@@ -9,7 +9,8 @@ vm-1
 vm-1
 
 [db_servers]
-vm-2
+vm-1 mysql_server_id=101
+vm-2 mysql_server_id=102
 
 [dns_servers]
 vm-2
@@ -21,4 +22,7 @@ vm-1
 vm-1
 
 [influxdb]
+vm-2
+
+[mysql_master]
 vm-2
