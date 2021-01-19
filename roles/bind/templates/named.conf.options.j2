@@ -1,3 +1,15 @@
+key "transfer.key" {
+	algorithm hmac-sha256;
+	secret "{{transfer_key}}";
+};
+
+key "nsupdate.key" {
+	algorithm hmac-sha256;
+	secret "{{update_key}}";
+};
+
+
+
 options {
 	directory "/var/cache/bind";
 
@@ -16,12 +28,6 @@ options {
 	dnssec-validation no;
 
 	auth-nxdomain no;    # conform to RFC1035
-};
-
-zone {{ domain }} {
-	type master;
-	file "/var/lib/bind/db.nuttn";
-
 };
 statistics-channels {
 	inet 127.0.0.1 port 8053 allow { 127.0.0.1; };

@@ -14,9 +14,18 @@ vm-2
 vm-1 mysql_server_id=101
 vm-2 mysql_server_id=102
 
-[dns_servers]
-vm-1
+[dns_masters]
 vm-2
+
+[dns_slaves]
+vm-1
+
+
+[dns_servers:children]
+dns_masters
+dns_slaves
+
+
 
 [prometheus]
 vm-1

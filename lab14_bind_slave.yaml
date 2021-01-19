@@ -4,9 +4,23 @@
     become: yes
     tasks:
       - setup:
-      - apt:
-          update_cache: yes
-
     roles:
-      - reverse_proxy
+      - init
+
+
+  - name: Install bind
+    hosts: dns_servers
+    become: yes
+    gather_facts: no
+    roles:
+      - bind
       - bind_exporter
+
+  - name: configure resolved
+    hosts: all
+    become: yes
+    gather_facts: no
+    roles:
+      - configure_resolved
+    tags:
+      - resolved

@@ -1,0 +1,12 @@
+zone "{{domain}}" {
+  type master;
+  notify yes;
+  file "/var/lib/bind/db.{{domain}}";
+  allow-transfer {key transfer.key;};
+  allow-update { key nsupdate.key; };
+  also-notify {
+{% for vm in groups['dns_slaves'] %}
+        {{ hostvars[vm]['ansible_default_ipv4']['address'] }};
+{% endfor %}
+    };
+};

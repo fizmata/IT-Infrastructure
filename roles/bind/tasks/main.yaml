@@ -1,16 +1,68 @@
-- name: install bind
-  apt:
-    name: bind9
-    
-    
-- name: conf bind
-  template:
-    src: named.conf.options.j2
-    dest: /etc/bind/named.conf.options
-  notify: restart bind
+---
+  - name: install bind
+    apt:
+      name: bind9
 
-- name: conf master zone
-  template:
-    src: db.nuttn.j2
-    dest: /etc/bind/db.nuttn
-  notify: reload DNS records
+  - name: start
+    service:
+      name: bind9
+      state: started
+      enabled: yes
+
+  - name: conf bind
+    template:
+      src: named.conf.options.j2
+      dest: /etc/bind/named.conf.options
+    notify: restart bind
+
+  - name: conf master instance
+    template:
+      src: named.conf.local.j2
+      dest: /etc/bind/named.conf.local
+    notify: restart bind
+    when: inventory_hostname in groups['dns_masters']
+
+  - name: conf slave instance
+    template:
+      src: named.conf.local.slaves.j2
+      dest: /etc/bind/named.conf.local
+    notify: restart bind
+    when: inventory_hostname in groups['dns_slaves']
+
+  - name: conf master zone
+    template:
+      src: db.nuttn.j2
+      dest: "/var/lib/bind/db.{{domain}}"
+    notify:
+      - reload DNS records
+    when: inventory_hostname in groups['dns_masters']
+
+
+  - name: Install nsupdate dependecy
+    apt:
+      name: python3-dnspython
+    when: inventory_hostname in groups['dns_masters']
+
+  - name: backup server dns record
+    nsupdate:
+      key_name: "nsupdate.key"
+      key_secret: "{{ update_key }}"
+      key_algorithm: "hmac-sha256"
+      server: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+      zone: "{{ domain }}"
+      record: "backup"
+      value: "{{ backup_server }}"
+    when: inventory_hostname in groups['dns_masters']
+
+  - name:  CNAME records
+    nsupdate:
+      key_name: "nsupdate.key"
+      key_secret: "{{ update_key }}"
+      key_algorithm: "hmac-sha256"
+      type: "CNAME"
+      server: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+      zone: "{{ domain }}"
+      record: "{{ item.cname }}"
+      value: "{{ item.real }}"
+    loop: "{{ dns_cnames }}"
+    when: inventory_hostname in groups['dns_masters']

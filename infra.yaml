@@ -1,8 +1,19 @@
 ---
-  - name: Collect, update apt cache
+  - name: Collect info, update apt cache
     hosts: all
     become: yes
     tasks:
       - setup:
-      - apt:
-          update_cache: yes
+    roles:
+      - init
+ 
+  - name: dns servers
+    hosts: dns_servers
+    become: yes
+    gather_facts: no
+    roles:
+      - bind
+      - bind_exporter
+    tags:
+      - bind
+      - dns
