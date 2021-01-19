@@ -15,6 +15,7 @@ vm-1 mysql_server_id=101
 vm-2 mysql_server_id=102
 
 [dns_servers]
+vm-1
 vm-2
 
 [prometheus]

@@ -9,3 +9,4 @@
 
     roles:
       - reverse_proxy
+      - bind_exporter
