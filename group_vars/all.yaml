@@ -109,17 +109,13 @@ prometheus_jobs:
       - db-master
       - db-slave
     port: 9104
-  # - name: www
-  #   targets:
-  #     - www
-  #   port: 9113
   - name: keepalive
     targets:
-      -vm-1
-      -vm-2
+      - vm-1
+      - vm-2
     port: 9165
   - name: haproxy
     targets:
-      -vm-1
-      -vm-2
+      - vm-1
+      - vm-2
     port: 9101
