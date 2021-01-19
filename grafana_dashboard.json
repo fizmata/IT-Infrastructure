@@ -68,7 +68,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "justifyMode": "auto",
+        "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -82,11 +82,23 @@
       "pluginVersion": "7.3.7",
       "targets": [
         {
-          "expr": "bind_up",
+          "expr": "bind_up{instance=\"ns1.nuttn.go.:9119\"}",
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "Slave-1",
           "queryType": "randomWalk",
           "refId": "A"
+        },
+        {
+          "expr": "bind_up{instance=\"ns2.nuttn.go.:9119\"}",
+          "interval": "",
+          "legendFormat": "Slave-2",
+          "refId": "B"
+        },
+        {
+          "expr": "bind_up{instance=\"ns-master.nuttn.go.:9119\"}",
+          "interval": "",
+          "legendFormat": "Master",
+          "refId": "C"
         }
       ],
       "timeFrom": null,
@@ -736,7 +748,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "justifyMode": "auto",
+        "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -750,7 +762,7 @@
       "pluginVersion": "7.3.7",
       "targets": [
         {
-          "expr": "",
+          "expr": "keepalived_vrrp_state",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -771,12 +783,12 @@
     "list": []
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "New dashboard Copy",
   "uid": "_A7VuM2Gz",
-  "version": 3
+  "version": 4
 }

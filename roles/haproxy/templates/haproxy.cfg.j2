@@ -36,6 +36,6 @@ listen nuttn
 	stats uri /haproxy?stats
 {% for vm in groups['web_servers'] %}
 {% for i in range(nginx_container_per_vm)%}
-	server {{ vm }}_{{ i }} {{vm}}.{{domain}}:270{{i}} check
+	server agama-{{ i }} {{vm}}.{{domain}}:270{{i}} check
 {% endfor %}
 {% endfor %}

@@ -81,6 +81,9 @@
     gather_facts: no
     roles:
       - agama_docker
+      - agama
+      - uwsgi
+      - reverse_proxy
     tags:
       - agama
 
@@ -112,6 +115,8 @@
     roles:
       - haproxy
       - haproxy_exporter
+    tags:
+      - haproxy
 
   - name: keepalived
     hosts: haproxy
@@ -120,3 +125,5 @@
     roles:
       - keepalived
       - keepalive_exporter
+    tags:
+      - keepalive
