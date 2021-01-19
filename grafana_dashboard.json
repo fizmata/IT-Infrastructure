@@ -46,15 +46,11 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "red",
                 "value": null
               },
               {
-                "color": "semi-dark-red",
-                "value": 0
-              },
-              {
-                "color": "semi-dark-green",
+                "color": "green",
                 "value": 1
               }
             ]
@@ -68,7 +64,7 @@
         "x": 0,
         "y": 0
       },
-      "id": 3,
+      "id": 6,
       "options": {
         "colorMode": "background",
         "graphMode": "none",
@@ -89,12 +85,13 @@
           "expr": "bind_up",
           "interval": "",
           "legendFormat": "",
+          "queryType": "randomWalk",
           "refId": "A"
         }
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Bind",
+      "title": "Bind9 Status",
       "type": "stat"
     },
     {
@@ -118,13 +115,13 @@
         "y": 0
       },
       "hiddenSeries": false,
-      "id": 6,
+      "id": 10,
       "legend": {
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
-        "show": true,
+        "show": false,
         "total": false,
         "values": false
       },
@@ -145,9 +142,9 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "bind_resolver_queries_total{type=\"NS\"}",
+          "expr": "rate(bind_resolver_queries_total[1m])",
           "interval": "",
-          "legendFormat": "Bind Transliations",
+          "legendFormat": "",
           "refId": "A"
         }
       ],
@@ -155,7 +152,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Queries per minute",
+      "title": "DNS Query Rate",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -193,7 +190,7 @@
       }
     },
     {
-      "datasource": null,
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -201,25 +198,30 @@
             {
               "from": "",
               "id": 1,
-              "text": "",
+              "text": "UP",
               "to": "",
-              "type": 1
+              "type": 1,
+              "value": "1"
+            },
+            {
+              "from": "",
+              "id": 2,
+              "text": "DOWN",
+              "to": "",
+              "type": 1,
+              "value": "0"
             }
           ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "red",
                 "value": null
               },
               {
-                "color": "#EAB839",
-                "value": 0.6
-              },
-              {
-                "color": "red",
-                "value": 0.85
+                "color": "green",
+                "value": 1
               }
             ]
           }
@@ -228,12 +230,15 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 4,
+        "w": 9,
         "x": 15,
         "y": 0
       },
-      "id": 10,
+      "id": 18,
       "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -242,16 +247,12 @@
           "fields": "",
           "values": false
         },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "textMode": "auto"
       },
       "pluginVersion": "7.3.7",
       "targets": [
         {
-          "expr": "rate(node_cpu{instance=\"vm-1.nuttn.go.:9100\", mode=\"user\"}[1m])",
-          "format": "time_series",
-          "hide": false,
-          "instant": false,
+          "expr": "haproxy_up",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -260,79 +261,8 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "CPU load VM-1",
-      "type": "gauge"
-    },
-    {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [
-            {
-              "from": "",
-              "id": 1,
-              "text": "",
-              "to": "",
-              "type": 1
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 0.6
-              },
-              {
-                "color": "red",
-                "value": 0.85
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 4,
-        "x": 19,
-        "y": 0
-      },
-      "id": 12,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true
-      },
-      "pluginVersion": "7.3.7",
-      "targets": [
-        {
-          "expr": "rate(node_cpu{instance=\"vm-1.nuttn.go.:9100\", mode=\"user\"}[1m])",
-          "format": "time_series",
-          "hide": false,
-          "instant": false,
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "CPU load VM-1",
-      "type": "gauge"
+      "title": "HAProxy Status",
+      "type": "stat"
     },
     {
       "datasource": null,
@@ -362,15 +292,11 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "red",
                 "value": null
               },
               {
-                "color": "red",
-                "value": 0
-              },
-              {
-                "color": "semi-dark-green",
+                "color": "green",
                 "value": 1
               }
             ]
@@ -384,7 +310,7 @@
         "x": 0,
         "y": 5
       },
-      "id": 2,
+      "id": 7,
       "options": {
         "colorMode": "background",
         "graphMode": "none",
@@ -410,7 +336,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "mysql",
+      "title": "MySQL Status",
       "type": "stat"
     },
     {
@@ -434,13 +360,13 @@
         "y": 5
       },
       "hiddenSeries": false,
-      "id": 7,
+      "id": 11,
       "legend": {
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
-        "show": true,
+        "show": false,
         "total": false,
         "values": false
       },
@@ -461,10 +387,9 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mysql_global_status_queries",
-          "hide": false,
+          "expr": "rate(mysql_global_status_queries[1m])",
           "interval": "",
-          "legendFormat": "mysql queries",
+          "legendFormat": "",
           "refId": "A"
         }
       ],
@@ -472,7 +397,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Queries per minute",
+      "title": "MySQL Query Rate",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -511,149 +436,6 @@
     },
     {
       "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [
-            {
-              "from": "",
-              "id": 1,
-              "text": "",
-              "to": "",
-              "type": 1
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 0.6
-              },
-              {
-                "color": "red",
-                "value": 0.85
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 4,
-        "x": 15,
-        "y": 5
-      },
-      "id": 11,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true
-      },
-      "pluginVersion": "7.3.7",
-      "targets": [
-        {
-          "expr": "(node_memory_MemTotal{instance=\"vm-1.nuttn.go.:9100\"} - node_memory_MemAvailable{instance=\"vm-1.nuttn.go.:9100\"})/node_memory_MemTotal{instance=\"vm-1.nuttn.go.:9100\"}",
-          "format": "time_series",
-          "hide": false,
-          "instant": false,
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Memory load VM-1",
-      "type": "gauge"
-    },
-    {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [
-            {
-              "from": "",
-              "id": 1,
-              "text": "",
-              "to": "",
-              "type": 1
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 0.6
-              },
-              {
-                "color": "red",
-                "value": 0.85
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 4,
-        "x": 19,
-        "y": 5
-      },
-      "id": 13,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true
-      },
-      "pluginVersion": "7.3.7",
-      "targets": [
-        {
-          "expr": "(node_memory_MemTotal{instance=\"vm-2.nuttn.go.:9100\"} - node_memory_MemAvailable{instance=\"vm-2.nuttn.go.:9100\"})/node_memory_MemTotal{instance=\"vm-2.nuttn.go.:9100\"}",
-          "format": "time_series",
-          "hide": false,
-          "instant": false,
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Memory load VM-2",
-      "type": "gauge"
-    },
-    {
-      "datasource": null,
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -679,15 +461,11 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "red",
                 "value": null
               },
               {
-                "color": "semi-dark-red",
-                "value": 0
-              },
-              {
-                "color": "semi-dark-green",
+                "color": "green",
                 "value": 1
               }
             ]
@@ -697,11 +475,11 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 4,
-        "x": 0,
-        "y": 10
+        "w": 9,
+        "x": 15,
+        "y": 5
       },
-      "id": 4,
+      "id": 20,
       "options": {
         "colorMode": "background",
         "graphMode": "none",
@@ -719,15 +497,73 @@
       "pluginVersion": "7.3.7",
       "targets": [
         {
-          "expr": "nginx_up",
+          "expr": "haproxy_server_up",
           "interval": "",
+          "intervalFactor": 1,
           "legendFormat": "",
           "refId": "A"
         }
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "nginx",
+      "title": "Container Status",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 0,
+        "y": 10
+      },
+      "id": 14,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.3.7",
+      "targets": [
+        {
+          "expr": "mysql_global_variables_server_id",
+          "interval": "",
+          "legendFormat": "",
+          "queryType": "randomWalk",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "MySQL Server ID",
       "type": "stat"
     },
     {
@@ -738,7 +574,21 @@
       "datasource": null,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
         },
         "overrides": []
       },
@@ -751,13 +601,13 @@
         "y": 10
       },
       "hiddenSeries": false,
-      "id": 8,
+      "id": 16,
       "legend": {
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
-        "show": true,
+        "show": false,
         "total": false,
         "values": false
       },
@@ -778,10 +628,9 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "nginx_http_requests_total",
-          "hide": false,
+          "expr": "mysql_global_variables_read_only",
           "interval": "",
-          "legendFormat": "Nginx requests",
+          "legendFormat": "",
           "refId": "A"
         }
       ],
@@ -789,7 +638,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Requests per minute",
+      "title": "MySQL Server Read Only Status",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -827,132 +676,94 @@
       }
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "InfluxDB/latency",
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "mappings": [
+            {
+              "from": "",
+              "id": 1,
+              "text": "Master",
+              "to": "",
+              "type": 1,
+              "value": "2"
+            },
+            {
+              "from": "",
+              "id": 2,
+              "text": "Backup",
+              "to": "",
+              "type": 1,
+              "value": "1"
+            },
+            {
+              "from": "",
+              "id": 3,
+              "text": "Dead Inside",
+              "to": "",
+              "type": 1,
+              "value": "0"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 1
+              },
+              {
+                "color": "green",
+                "value": 2
+              }
+            ]
+          }
         },
         "overrides": []
       },
-      "fill": 1,
-      "fillGradient": 0,
       "gridPos": {
         "h": 5,
-        "w": 8,
+        "w": 9,
         "x": 15,
         "y": 10
       },
-      "hiddenSeries": false,
-      "id": 15,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
+      "id": 19,
       "options": {
-        "alertThreshold": true
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
       },
-      "percentage": false,
       "pluginVersion": "7.3.7",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
       "targets": [
         {
-          "groupBy": [
-            {
-              "params": [
-                "1m"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "0"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "latency",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "table",
-          "select": [
-            [
-              {
-                "params": [
-                  "rtt"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": []
+          "expr": "",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
         }
       ],
-      "thresholds": [],
       "timeFrom": null,
-      "timeRegions": [],
       "timeShift": null,
-      "title": "Latency Mean",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "title": "Keepalived Status",
+      "type": "stat"
     }
   ],
-  "refresh": "30s",
+  "refresh": false,
   "schemaVersion": 26,
   "style": "dark",
   "tags": [],
@@ -960,12 +771,12 @@
     "list": []
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "New dashboard Copy",
-  "uid": "cc4V0nfMz",
-  "version": 6
+  "uid": "_A7VuM2Gz",
+  "version": 3
 }

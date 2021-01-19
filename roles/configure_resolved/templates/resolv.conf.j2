@@ -1,11 +1,8 @@
 search {{ domain }}     // will be added to short names
-nameserver {
-{% for vm in groups['dns_masters'] %}
-  {{vm}}.{{domain}}
-{%endfor%}
-}
-nameserver {
+
+
 {% for vm in groups['dns_slaves'] %}
+nameserver {
   {{vm}}.{{domain}}
-{%endfor%}
 }
+{%endfor%}

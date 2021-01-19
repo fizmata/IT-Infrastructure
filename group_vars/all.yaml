@@ -1,4 +1,4 @@
-mysql_host: 192.168.42.42
+mysql_host: 192.168.42.21
 mysql_database: agama
 mysql_user: agama
 mysql_password: !vault |
@@ -56,22 +56,22 @@ agama_port: 8000
 nginx_container_per_vm: 2
 
 dns_cnames:
-  - cname: ns
-    real: "{{ groups['dns_servers'][0] }}"
+  - cname: ns1
+    real: "{{ groups['dns_slaves'][0] }}"
+  - cname: ns2
+    real: "{{ groups['dns_slaves'][1] }}"
+  - cname: ns-master
+    real: "{{ groups['dns_masters'][0] }}"
   - cname: prometheus
     real: "{{ groups['prometheus'][0] }}"
-  - cname: db-1
-    real: "{{ groups['db_servers'][0] }}"
-  - cname: db-2
-    real: "{{ groups['db_servers'][1] }}"
-  - cname: www
-    real: "{{ groups['web_servers'][0]}}"
+  - cname: db-master
+    real: "{{ groups['mysql_master'][0] }}"
+  - cname: db-slave
+    real: "{{ groups['mysql_slave'][0] }}"
   - cname: grafana
     real: "{{ groups['grafana_docker'][0] }}"
   - cname: influxdb
     real: "{{ groups['influxdb'][0]}}"
-  - cname: backup
-    real: "{{backup_server}}"
 
 
 transfer_key: !vault |
@@ -85,12 +85,12 @@ transfer_key: !vault |
 
 update_key: !vault |
           $ANSIBLE_VAULT;1.1;AES256
-          61396663623733303663313765393131393762666164306230626536356332346331653065396661
-          3035623239663034326365353737393664393530383963320a666432306261646138346631303339
-          38316230646535393133383134366464643633626164333166316362623234386564326566323665
-          3130353032633064340a663533636336643065613861326135653263316462323130613465313064
-          34336265313266643537613739643164313139343761663631396433313936343261343164613038
-          3563396136363038623737626436373431613865643663623562
+          34343036386437353631663230376639653661623931643932613931626562383033323364393762
+          3561656238303562326433326130613565623462633065390a313565323335346162303963633265
+          36386439613031316162336535333261616337626534303233396138313839333962316362366133
+          6362333135613933660a346332323032633334303161396364653838646466336237666135643532
+          65376566343030353134656362623266323765333964376636663636303539616665643535363736
+          3935353464326635373632653563393537343333373866323266
 
 
 
@@ -100,23 +100,24 @@ prometheus_jobs:
     port: 9100
   - name: bind
     targets:
-      - ns
+      - ns1
+      - ns2
+      - ns-master
     port: 9119
   - name: mysql
     targets:
-      - db-1
-      - db-2
+      - db-master
+      - db-slave
     port: 9104
-  - name: www
-    targets:
-      - www
-    port: 9113
+  # - name: www
+  #   targets:
+  #     - www
+  #   port: 9113
   - name: keepalive
     targets:
       -vm-1
       -vm-2
     port: 9165
-
   - name: haproxy
     targets:
       -vm-1

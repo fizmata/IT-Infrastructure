@@ -19,12 +19,11 @@ If you have no idea what service is down, or what service even is take these ste
 
 ### For more experienced
 To redeploy individual services use tags
-- nginx `ansible-playbook redeploy.yaml -t nginx`
-- uwsgi `ansible-playbook redeploy.yaml -t uwsgi`
-- agama `ansible-playbook redeploy.yaml -t agama`
-- mysql `ansible-playbook redeploy.yaml -t mysql`
-- bind `ansible-playbook redeploy.yaml -t dns`
-- prometheus `ansible-playbook redeploy.yaml -t prometheus`
+- nginx `ansible-playbook infra.yaml -t nginx`
+- agama `ansible-playbook infra.yaml -t agama`
+- mysql `ansible-playbook infra.yaml -t mysql`
+- bind `ansible-playbook infra.yaml -t dns`
+- prometheus `ansible-playbook infra.yaml -t prometheus`
 - influxdb `ansible-playbook redeploy.yaml -t influxdb`
 - grafana `ansible-playbook redeploy.yaml -t grafana`
 

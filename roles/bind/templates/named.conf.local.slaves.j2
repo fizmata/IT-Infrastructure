@@ -1,6 +1,6 @@
 {% for vm in groups['dns_masters']%}
     server {{ hostvars[vm]['ansible_default_ipv4']['address'] }}{
-    keys{transfer.key; nsupdate.key};
+    keys{transfer.key};
     };
 {%endfor%}
 

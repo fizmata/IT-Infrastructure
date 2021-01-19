@@ -6,7 +6,8 @@
       - setup:
     roles:
       - init
- 
+      - users
+
   - name: dns servers
     hosts: dns_servers
     become: yes
@@ -17,3 +18,105 @@
     tags:
       - bind
       - dns
+
+  - name: configure resolvers
+    hosts: all
+    become: yes
+    gather_facts: no
+    roles:
+      - configure_resolved
+    tags:
+      - dns
+
+
+  - name: node_exporters
+    hosts: all
+    become: yes
+    gather_facts: no
+    roles:
+      - node_exporter
+
+  - name: mysql
+    hosts: db_servers
+    become: yes
+    gather_facts: no
+    roles:
+      - mysql
+      - mysql_exporter
+    tags:
+      - mysql
+
+  # - name: setup HA mysql
+  #   hosts: mysql_slave
+  #   become: yes
+  #   gather_facts: no
+  #   roles:
+  #     - mysql_replica
+  #   tags:
+  #     - mysql
+
+  - name: monitoring utilites
+    hosts: all
+    become: yes
+    gather_facts: no
+    roles:
+      - node_exporter
+      - rsyslog
+    tags:
+      - node_exporter
+      - rsyslog
+
+  - name: install docker
+    hosts: all
+    become: yes
+    gather_facts: no
+    roles:
+      - docker
+    tags:
+      - docker
+
+  - name: agama in docker
+    hosts: app_servers
+    become: yes
+    gather_facts: no
+    roles:
+      - agama_docker
+    tags:
+      - agama
+
+  - name: monitoring vm
+    hosts: management
+    become: yes
+    gather_facts: no
+    roles:
+      - reverse_proxy_final
+      - influxdb
+      - pinger
+      - grafana_docker
+      - prometheus
+    tags:
+      - monitoring
+
+  - name: Backup
+    hosts: all
+    become: yes
+    gather_facts: no
+    roles:
+      - backup
+
+
+  - name: HAProxy
+    hosts: haproxy
+    become: yes
+    gather_facts: no
+    roles:
+      - haproxy
+      - haproxy_exporter
+
+  - name: keepalived
+    hosts: haproxy
+    become: yes
+    gather_facts: no
+    roles:
+      - keepalived
+      - keepalive_exporter

@@ -3,11 +3,7 @@
     apt:
       name: bind9
 
-  - name: start
-    service:
-      name: bind9
-      state: started
-      enabled: yes
+
 
   - name: conf bind
     template:
@@ -37,6 +33,13 @@
       - reload DNS records
     when: inventory_hostname in groups['dns_masters']
 
+  - name: start
+    service:
+      name: bind9
+      state: started
+      enabled: yes
+
+  - meta: flush_handlers
 
   - name: Install nsupdate dependecy
     apt:

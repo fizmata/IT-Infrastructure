@@ -10,6 +10,7 @@
     docker_container:
       name: grafana
       image: grafana/grafana
+      network_mode: host
       env:
         GF_SERVER_ROOT_URL: "http://localhost:{{grafana_port}}/grafana"
         GF_SERVER_SERVE_FROM_SUB_PATH: "true"
@@ -19,11 +20,13 @@
         - /opt/docker/grafana:/var/lib/grafana
 
 
-  - name: grafana.db permissions
+  - name: hotfix
     file:
       path: /opt/docker/grafana/grafana.db
+      state: touch
       owner: 472
       group: 472
+
 
   - name: grafana group
     group:

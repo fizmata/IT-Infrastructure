@@ -2,8 +2,8 @@ zone "{{domain}}" {
   type master;
   notify yes;
   file "/var/lib/bind/db.{{domain}}";
-  allow-transfer {key transfer.key;};
-  allow-update { key nsupdate.key; };
+  allow-transfer {key transfer.key; key nsupdate.key;};
+  allow-update { key nsupdate.key; key transfer.key;};
   also-notify {
 {% for vm in groups['dns_slaves'] %}
         {{ hostvars[vm]['ansible_default_ipv4']['address'] }};

@@ -1,4 +1,4 @@
-{% if inventory_hostname in groups['db_servers'] %}
+{% if inventory_hostname in groups['mysql_master'] %}
 0 3 * * */{{ increment_period }} backup mysqldump agama > ~/backup/agama.sql
 {% endif %}
 {% if inventory_hostname in groups['grafana'] %}
