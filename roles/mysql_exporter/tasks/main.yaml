@@ -3,7 +3,7 @@
     apt:
       name: prometheus-mysqld-exporter
       state: present
-      update_cache: yes
+
 
   - name: Config
     template:
@@ -25,4 +25,5 @@
   - name: Enabled
     service:
       name: prometheus-mysqld-exporter
-      state: restarted
+      state: started
+      enabled: yes

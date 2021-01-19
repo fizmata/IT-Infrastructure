@@ -6,3 +6,6 @@
       - setup:
       - apt:
           update_cache: yes
+
+    roles:
+      - reverse_proxy

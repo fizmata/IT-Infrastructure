@@ -4,7 +4,19 @@ server{
 
   {% if inventory_hostname in groups['web_servers'] %}
   location /{
-      proxy_pass http://localhost:{{agama_port}};
+      proxy_pass http://localhost:2700;
+  }
+  {% endif %}
+
+  {% if inventory_hostname in groups['haproxy'] %}
+  location /haproxy-metrics{
+      proxy_pass http://localhost:9101/metrics;
+  }
+  {% endif %}
+
+  {% if inventory_hostname in groups['haproxy'] %}
+  location /keepalived-metrics{
+      proxy_pass http://localhost:9165/metrics;
   }
   {% endif %}
 

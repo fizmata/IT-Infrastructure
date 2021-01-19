@@ -1,8 +1,11 @@
 ---
-  - name: Collect info about all VMs
+  - name: Collect, update apt cache
     hosts: all
+    become: yes
     tasks:
       - setup:
+      - apt:
+          update_cache: yes
 
   - name: Install bind9
     hosts: dns_servers
@@ -37,13 +40,13 @@
     tags:
       - replication
 
-  - name: agama
-    hosts: app_servers
-    become: yes
-    gather_facts: no
-    roles:
-      - agama
-      - uwsgi
+  # - name: agama
+  #   hosts: app_servers
+  #   become: yes
+  #   gather_facts: no
+  #   roles:
+  #     - agama
+  #     - uwsgi
 
   - name: backup
     hosts: all
@@ -96,16 +99,16 @@
     roles:
       - nginx_exporter
 
-  - name: grafana
-    hosts: grafana
-    become: yes
-    gather_facts: no
-    roles:
-      - grafana
+  # - name: grafana
+  #   hosts: grafana
+  #   become: yes
+  #   gather_facts: no
+  #   roles:
+  #     - grafana
 
-  - name: backup grafana
-    hosts: grafana
-    become: yes
-    gather_facts: no
-    roles:
-      - backup_grafana
+  # - name: backup grafana
+  #   hosts: grafana
+  #   become: yes
+  #   gather_facts: no
+  #   roles:
+  #     - backup_grafana

@@ -1,12 +1,14 @@
-vm-1 ansible_host=193.40.156.86 ansible_port=8522 ansible_ssh_user=ubuntu ansible_python_interpreter=python3
+vm-1 ansible_host=193.40.156.86 ansible_port=4022 ansible_ssh_user=ubuntu ansible_python_interpreter=python3
 
-vm-2 ansible_host=193.40.156.86 ansible_port=4522 ansible_ssh_user=ubuntu ansible_python_interpreter=python3
+vm-2 ansible_host=193.40.156.86 ansible_port=4222 ansible_ssh_user=ubuntu ansible_python_interpreter=python3
 
 [web_servers]
 vm-1
+vm-2
 
 [app_servers]
 vm-1
+vm-2
 
 [db_servers]
 vm-1 mysql_server_id=101
@@ -31,3 +33,7 @@ vm-1
 
 [grafana_docker]
 vm-1
+
+[haproxy]
+vm-1
+vm-2

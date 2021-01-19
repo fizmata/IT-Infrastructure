@@ -3,9 +3,10 @@
     apt:
       name: prometheus-bind-exporter
       state: present
-      update_cache: yes
+
 
   - name: start
     service:
       name: prometheus-bind-exporter
-      state: restarted
+      state: started
+      enabled: yes

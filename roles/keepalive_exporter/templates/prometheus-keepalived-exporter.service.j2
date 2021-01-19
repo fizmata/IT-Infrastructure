@@ -1,0 +1,12 @@
+[Unit]
+Description=Prometheus exporter for keepalive
+Documentation=https://github.com/cafebazaar/keepalived-exporter
+
+[Service]
+Restart=always
+User=root
+ExecStart=/usr/local/bin/keepalived-exporter
+
+
+[Install]
+WantedBy=multi-user.target

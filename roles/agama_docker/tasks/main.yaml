@@ -19,9 +19,11 @@
 
   - name: start container
     docker_container:
-      name: agama
+      name: "agama-{{item}}"
       image: agama
       env:
         AGAMA_DATABASE_URI: mysql://{{ mysql_user }}:{{ mysql_password }}@{{ mysql_host }}/{{ mysql_database }}
       published_ports:
-        - "{{ agama_port }}:8000"
+        - "270{{item}}:8000"
+    loop:
+      "{{range(nginx_container_per_vm)|list}}"

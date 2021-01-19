@@ -1,4 +1,4 @@
-mysql_host: 192.168.42.45
+mysql_host: 192.168.42.42
 mysql_database: agama
 mysql_user: agama
 mysql_password: !vault |
@@ -53,6 +53,8 @@ domain: nuttn.go.
 grafana_port: 3000
 agama_port: 8000
 
+nginx_container_per_vm: 2
+
 dns_cnames:
   - cname: ns
     real: "{{ groups['dns_servers'][0] }}"
@@ -65,7 +67,7 @@ dns_cnames:
   - cname: www
     real: "{{ groups['web_servers'][0]}}"
   - cname: grafana
-    real: "{{ groups['grafana'][0] }}"
+    real: "{{ groups['grafana_docker'][0] }}"
   - cname: influxdb
     real: "{{ groups['influxdb'][0]}}"
 
@@ -86,3 +88,14 @@ prometheus_jobs:
     targets:
       - www
     port: 9113
+  - name: keepalive
+    targets:
+      -vm-1
+      -vm-2
+    port: 9165
+
+  - name: haproxy
+    targets:
+      -vm-1
+      -vm-2
+    port: 9101

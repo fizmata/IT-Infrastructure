@@ -1,8 +1,11 @@
 ---
-  - name: Collect info about all VMs
+  - name: Collect, update apt cache
     hosts: all
+    become: yes
     tasks:
       - setup:
+      - apt:
+          update_cache: yes
 
   - name: Install docker
     hosts: all

@@ -3,7 +3,7 @@
     apt:
       name: fping
       state: present
-      update_cache: yes
+      
 
   - name: get pinger script
     template:

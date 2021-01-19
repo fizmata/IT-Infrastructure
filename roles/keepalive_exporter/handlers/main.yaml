@@ -1,0 +1,8 @@
+---
+  - name: systemctl daemon-reload
+    shell: "systemctl daemon-reload"
+
+  - name: restart keepalive exporter
+    service:
+      name: prometheus-keepalived-exporter
+      state: restarted

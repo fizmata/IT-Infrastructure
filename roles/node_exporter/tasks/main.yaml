@@ -4,4 +4,4 @@
       name:
         - prometheus-node-exporter
         - nginx
-      update_cache: yes
+      
