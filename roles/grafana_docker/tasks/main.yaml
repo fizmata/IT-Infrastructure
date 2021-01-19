@@ -23,7 +23,6 @@
   - name: hotfix
     file:
       path: /opt/docker/grafana/grafana.db
-      state: touch
       owner: 472
       group: 472
 
